@@ -24,7 +24,16 @@
 
 {%endif%}
 
-<h1>Projects Template </h1>
-<p> This is a Projects Template</p>
+<hr>
+<h1>Projects</h1>
+
+<ul>
+{% for project in projects %}
+    <li>{{project.title}}</li>
+{%endfor%}
+</ul>
+
+
+
 
 {% endblock content %}

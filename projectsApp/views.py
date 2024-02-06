@@ -3,6 +3,21 @@ from django.http import HttpResponse
 
 # Create your views here.
 
+projectsList = [
+    {'id':'1',
+     'title': "E-commerce Website",
+     'description': "Fully functional eccomerce website"
+    },
+    {'id':'2',
+     'title': "Portfolio Website",
+     'description': "This is a project where I built out my portfolio"
+    },
+    {'id':'3',
+     'title': "Social Network",
+     'description': "Awesome open source project I am still working on"
+    }
+]
+
 '''
 This is a list of our projects
 Pass in some dynamic data to the template to render and display in the browser
@@ -10,7 +25,7 @@ Pass in some dynamic data to the template to render and display in the browser
 def projects(request):
     page = "projects"
     number = 10
-    context = {'page':page, 'number': number}
+    context = {'page':page, 'number': number, 'projects': projectsList}
     return render(request, 'projectsApp/projects.html', context)
 
 '''
