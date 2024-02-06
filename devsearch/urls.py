@@ -15,26 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.http import HttpResponse
+from django.urls import path, include
 
-'''
-This is a list of our projects
-'''
-def projects(request):
-    return HttpResponse("Here are our projects")
-
-'''
-This is a single project.
-When we have a list of projects we want to open up a project and learn about it.
-We want to read about this specific project.
-This is a Dynamic view function.
-'''
-def project(request, pk):
-    return HttpResponse(f"SINGLE PROJECT {pk}")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('projects/', projects, name="projects"),
-    path('project/<str:pk>/', project, name="project"),
+    path('', include('projectsApp.urls')),
 ]
