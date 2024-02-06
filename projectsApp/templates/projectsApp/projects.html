@@ -8,6 +8,22 @@
 
 {% block content %}
 
+<p> Hello! You are on the {{page}} page </p>
+
+{% if number > 10%}
+
+    <p> Number is greater than 10 </p>
+
+{% elif number == 10 %}
+
+    <p> Number is equal to 10 </p> 
+
+{% else %}
+
+<p> Number is less than 10 </p>
+
+{%endif%}
+
 <h1>Projects Template </h1>
 <p> This is a Projects Template</p>
 

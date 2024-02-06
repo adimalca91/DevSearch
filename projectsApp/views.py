@@ -5,9 +5,13 @@ from django.http import HttpResponse
 
 '''
 This is a list of our projects
+Pass in some dynamic data to the template to render and display in the browser
 '''
 def projects(request):
-    return render(request, 'projectsApp/projects.html')
+    page = "projects"
+    number = 10
+    context = {'page':page, 'number': number}
+    return render(request, 'projectsApp/projects.html', context)
 
 '''
 This is a single project.
