@@ -7,7 +7,7 @@ from django.http import HttpResponse
 This is a list of our projects
 '''
 def projects(request):
-    return render(request, 'projects.html')
+    return render(request, 'projectsApp/projects.html')
 
 '''
 This is a single project.
@@ -17,5 +17,5 @@ This is a Dynamic view function.
 '''
 def project(request, pk):
     context = {'pk': pk}
-    return render(request, 'single-project.html', context)
+    return render(request, 'projectsApp/single-project.html', context)
 
