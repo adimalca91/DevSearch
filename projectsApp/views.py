@@ -35,6 +35,10 @@ We want to read about this specific project.
 This is a Dynamic view function.
 '''
 def project(request, pk):
-    context = {'pk': pk}
+    projectObj = None
+    for i in projectsList:
+        if i['id'] == pk:
+            projectObj = i
+    context = {'projectObject': projectObj}
     return render(request, 'projectsApp/single-project.html', context)
 
