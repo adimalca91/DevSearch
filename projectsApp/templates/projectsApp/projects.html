@@ -29,11 +29,8 @@
 
 <ul>
 {% for project in projects %}
-    <li>{{project.title}} --- {{project.description}}</li>
+    <li><a href="{% url 'project' project.id %}">{{project.title}}</a> --- {{project.description}}</li>
 {%endfor%}
 </ul>
-
-
-
 
 {% endblock content %}
