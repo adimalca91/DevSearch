@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import *
 
 # Create your views here.
 
@@ -22,10 +23,15 @@ projectsList = [
 This is a list of our projects
 Pass in some dynamic data to the template to render and display in the browser
 '''
+# def projects(request):
+#     page = "projects"
+#     number = 10
+#     context = {'page':page, 'number': number, 'projects': projectsList}
+#     return render(request, 'projectsApp/projects.html', context)
+
 def projects(request):
-    page = "projects"
-    number = 10
-    context = {'page':page, 'number': number, 'projects': projectsList}
+    projects = Project.objects.all()
+    context = {'projects': projects}
     return render(request, 'projectsApp/projects.html', context)
 
 '''
