@@ -30,32 +30,32 @@ def project(request, pk):
 CRUD - CREATE, READ, UPDATE, DELETE -OPERATIONS! 
 '''
 
-# Create and Read
+# Create and Read - Create any kind of project via it's form - hence NO pk paramater
 def createProject(request):
     form = ProjectForm()
     if request.method == "POST":
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST)  # populate the form with the post data
         if form.is_valid():
-            form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL
+            form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL / SAVES TO DB
             return redirect('projects')
         
     context = {'form':form}
     return render(request, 'projectsApp/project_form.html', context)
 
-# Update and Read
+# Update and Read - Update a certain specific project via it's form - hence the pk parameter
 def updateProject(request, pk):
     project = Project.objects.get(id=pk)
     form = ProjectForm(instance=project)   # MUST pass in an instance of the project that we want to edit!
     if request.method == "POST":
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
-            form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL
+            form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL - Update it with the new data
             return redirect('projects')
         
     context = {'form':form}
     return render(request, 'projectsApp/project_form.html', context)
 
-# Delete
+# Delete - Delete a certain specific project via it's form - hence the pk parameter
 def deleteProject(request, pk):
     project = Project.objects.get(id=pk)
     if request.method == "POST":
