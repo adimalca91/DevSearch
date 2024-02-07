@@ -51,6 +51,7 @@ This is a Dynamic view function.
 
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
-    context = {'projectObject': projectObj}
+    tags = projectObj.tags.all()
+    context = {'projectObject': projectObj, 'tags':tags}
     return render(request, 'projectsApp/single-project.html', context)
 
