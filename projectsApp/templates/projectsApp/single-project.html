@@ -10,7 +10,14 @@
 
 <h1>{{projectObject.title}}</h1>
 <br>
-<p>{{tags}}</p>
+<hr>
+{% for tag in tags %}
+
+    <span style="border:1px solid grey; margin:10px"> {{tag}} </span>
+
+{%endfor%}
+
+
 
 
 {% endblock content %}
