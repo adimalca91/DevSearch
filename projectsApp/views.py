@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
+from .forms import *
 
 # Create your views here.
 
@@ -26,5 +27,6 @@ def project(request, pk):
     return render(request, 'projectsApp/single-project.html', context)
 
 def createProject(request):
-    context = {}
+    form = ProjectForm()
+    context = {'form':form}
     return render(request, 'projectsApp/project_form.html', context)
