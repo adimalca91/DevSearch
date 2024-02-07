@@ -1,0 +1,18 @@
+<!-- This is a Delete template for all the pages -->
+
+{% extends 'main.html' %}
+
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <p> Are you sure you want to delete "{{object}}"? </p>
+
+    <a href="{% url 'projects' %}"> Go Back </a> 
+
+    <input type="submit" value="Confirm" />
+
+</form>
+
+{% endblock %}
