@@ -125,6 +125,18 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
+
+'''
+ADI - I added this. 
+We need to configure this in order to tell django where to save the images that the user upload.
+The user wants to upload a profile image for example, if we do not specify where to save it, then 
+django saves it in the root folder and that gets messy! So, here we tell django where to save
+all those images.
+Tells Django where to upload user generated content! Tells Django where to upload / save content
+that is submittedby the user.
+'''
+MEDIA_ROOT = BASE_DIR / 'static/images'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
