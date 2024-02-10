@@ -34,7 +34,7 @@ CRUD - CREATE, READ, UPDATE, DELETE -OPERATIONS!
 def createProject(request):
     form = ProjectForm()
     if request.method == "POST":
-        form = ProjectForm(request.POST)  # populate the form with the post data
+        form = ProjectForm(request.POST, request.FILES)  # populate the form with the post data and FILES the user submitted in the form
         if form.is_valid():
             form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL / SAVES TO DB
             return redirect('projects')
@@ -47,7 +47,7 @@ def updateProject(request, pk):
     project = Project.objects.get(id=pk)
     form = ProjectForm(instance=project)   # MUST pass in an instance of the project that we want to edit!
     if request.method == "POST":
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL - Update it with the new data
             return redirect('projects')
