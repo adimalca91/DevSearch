@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+o4^ba^_!ht54p!blli+c$=25zkl(+sns!fx9b25@$yaxv81ru
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] # When deploying and changing DEBUG=False this activates - these are the domains that are allowed to connect to our website
 
 
 # Application definition
@@ -44,6 +44,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -143,6 +146,8 @@ MEDIA_ROOT = BASE_DIR / 'static/images'
 '''
 Define where our static files in production are going to be.
 You can call this Folder whatever you want.
+Bundle up all the static files in the project (even the admin panel ones) under one folder and get
+them ready for deployment.
 '''
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
