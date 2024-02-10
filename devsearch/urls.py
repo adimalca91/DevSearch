@@ -17,8 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# These are for django to work with images
+from django.conf import settings
+from django.conf.urls.static import static    # This is a method
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('projectsApp.urls')),
 ]
+
+# Connect the URL to Media ROOT
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
