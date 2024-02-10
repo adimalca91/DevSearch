@@ -120,6 +120,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# ADI - added this
+MEDIA_URL = 'images/'
+
 # Adi: Added this in order for Django to know where the static folder is
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
