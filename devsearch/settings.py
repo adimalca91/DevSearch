@@ -140,6 +140,12 @@ that is submittedby the user.
 '''
 MEDIA_ROOT = BASE_DIR / 'static/images'
 
+'''
+Define where our static files in production are going to be.
+You can call this Folder whatever you want.
+'''
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
