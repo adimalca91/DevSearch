@@ -1,9 +1,11 @@
 from django.db import models
 import uuid
+from usersApp.models import Profile
 
 # Create your models here.
 
 class Project(models.Model):
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL) # We want to connect a project to a specific user profile - many-to-one relationship
     title = models.CharField(max_length=200)   # By default null=False - required to enter data in this field (for the database)
     description = models.TextField(null=True, blank=True)  # Does NOT require to enter data in this field! blank is the same but for django form to be submitted! We can submit a form without adding this!
     featured_image = models.ImageField(null=True, blank=True, default="default.jpg") # B/c its in "images" folder no need to specify path, otherwise path needed
