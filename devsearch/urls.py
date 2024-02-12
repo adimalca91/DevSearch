@@ -24,7 +24,8 @@ from django.conf.urls.static import static    # This is a method
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('projectsApp.urls')),
+    path('projects/', include('projectsApp.urls')),
+    path('', include('usersApp.urls')),
 ]
 
 # Connect the URL to Media ROOT
