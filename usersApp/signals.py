@@ -19,6 +19,7 @@ created - Boolean that lets us know if a user / a model was added to the db or i
 '''
 #@receiver(post_save, sender=Profile)
 def createProfile(sender, instance, created, **kwargs):
+    # print("Profile save triggered")
     if created:
         user = instance
         profile = Profile.objects.create(
@@ -42,6 +43,7 @@ def deleteUser(sender, instance, **kwargs):
 
 # Any time a user model instance gets created a profile will be created
 # Any time a user gets created what do we want to do?
+# This createProfile function is triggered when a User is saved!
 post_save.connect(createProfile, sender=User)
 
 
