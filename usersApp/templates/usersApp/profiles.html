@@ -33,7 +33,7 @@
 
           <div class="column card">
             <div class="dev">
-              <a href="" class="card__body">
+              <a href="{% url 'user-profile' profile.id %}" class="card__body">
                 <div class="dev__profile">
                   <img class="avatar avatar--md" src="{{profile.profile_image.url}}" alt="image" />  <!-- B/c we are accessing an image in the image field we have to add the ".url" at the end -->
                   <div class="dev__meta">
@@ -45,24 +45,13 @@
                     {{profile.bio|slice:"150"}} <!-- Limit the text area to 150 characters -->
                 </p>
                 <div class="dev__skills">
+
+                  {% for skill in profile.skill_set.all %}  <!-- We are going into all the profile skills (we can get the child object - profile.skill_set.all - this is how you query a child set of objects) -->
                   <span class="tag tag--pill tag--main">
-                    <small>JavaScript</small>
+                    <small>{{skill}}</small>
                   </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>React</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>SCSS</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>Nodejs</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>Express</small>
-                  </span>
-                  <span class="tag tag--pill tag--main">
-                    <small>GraphQL</small>
-                  </span>
+                  {% endfor %}
+
                 </div>
               </a>
             </div>
