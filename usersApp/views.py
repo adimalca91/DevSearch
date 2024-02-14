@@ -70,7 +70,7 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    messages.error(request, "User was successfully logged out!")
+    messages.info(request, "User was successfully logged out!")
     return redirect('login')
 
 # Note - when register successfully a profile is automatically genretaed b/c we built signals for it!
