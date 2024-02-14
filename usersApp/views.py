@@ -35,6 +35,8 @@ In this process, when a user submits their data we want to output certain errors
 
 def loginUser(request):
     
+    page = 'login'
+    
     # restrict a logged in user from directly going to '/login' path in the url bar
     if request.user.is_authenticated:
         return redirect('profiles')
@@ -67,7 +69,13 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    messages.error(request, "User was successfully logged out")
+    messages.error(request, "User was successfully logged out!")
     return redirect('login')
+
+
+def registerUser(request):
+    page = 'register'
+    context = {'page':page}
+    return render(request, 'usersApp/login_register.html', context)
     
     

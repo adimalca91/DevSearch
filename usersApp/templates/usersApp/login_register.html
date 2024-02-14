@@ -2,11 +2,20 @@
 
 {% block content %}
 
-<form action="{% url 'login' %}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username"/>
-    <input type="password" name="password" placeholder="Enter password"/>
-    <input type="submit" value="Login" />
-</form>
+<!-- If the page is a register page render one form and if its another render out a different form -->
+{% if page == 'register' %}
+    <h1> Register User </h1>
+
+    <p> Already have an account? <a href="{% url 'login' %}">Login</a> </p>
+{% else %}
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username"/>
+        <input type="password" name="password" placeholder="Enter password"/>
+        <input type="submit" value="Login" />
+
+        <p> Don't have an account? <a href="{% url 'register' %}">Sign Up</a> </p>
+    </form>
+{% endif %}
 
 {% endblock content %}
