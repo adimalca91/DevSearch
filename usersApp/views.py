@@ -59,7 +59,7 @@ def loginUser(request):
         
         # If the user does exists!
         if user is not None:
-            login(request, user)
+            login(request, user)                          # creates a session based token in the db and adds it to the cookies
             return redirect('profiles')
         else:                                             # user exists but can't login - if user did not exist then it would print in the except section
             # print("Username OR password is incorrect")
@@ -73,7 +73,7 @@ def logoutUser(request):
     messages.error(request, "User was successfully logged out!")
     return redirect('login')
 
-
+# Note - when register successfully a profile is automatically genretaed b/c we built signals for it!
 def registerUser(request):
     page = 'register'
     form = UserCreationForm()
@@ -87,6 +87,13 @@ def registerUser(request):
             user.save()                             # Now a user is officially being added to the db and saved
             
             messages.success(request, "User acount was successfully created!")
+            
+            login(request, user)     # The user will now be logged in
+            
+            return redirect('profiles')
+        
+        else:
+            messages.error(request, "An error has occured during registration")
     
     context = {'page':page, 'form':form}
     return render(request, 'usersApp/login_register.html', context)
