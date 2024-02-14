@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 from .models import Profile
 
 # Create your views here.
@@ -25,6 +27,32 @@ def userProfile(request, pk):
     return render(request, 'usersApp/user-profile.html', context)
 
 
+'''
+In this process, when a user submits their data we want to output certain errors if things go wrong
+'''
+
 def loginPage(request):
+    
+    if request.method == "POST":
+        print(request.POST) # QueryDict object
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        
+        try:                                                   # Check if the user exists
+            user = User.objects.get(username=username)
+        except:                                                # if the user does NOT exist
+            print("Username does not exist")
+            
+        # Takes in the username and password and will make sure that the password matches the username and returns either the user instance or None - Query the db, if finds a user that matches the username and password then it will return back that user
+        user = authenticate(request, username=username, password=password)
+        
+        # If the user does exists!
+        if user is not None:
+            login(request, user)
+            return redirect('profiles')
+        else:                                             # user exists but can't login - if user did not exist then it would print in the except section
+            print("Username OR password is incorrect")
+            
     return render(request, 'usersApp/login_register.html')
     
