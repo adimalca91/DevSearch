@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required     # This decorator will simply sit above any view that we want to block and basically require athentication for
+from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile
 
@@ -47,7 +48,8 @@ def loginUser(request):
         try:                                                   # Check if the user exists
             user = User.objects.get(username=username)
         except:                                                # if the user does NOT exist
-            print("Username does not exist")
+            # print("Username does not exist")
+            messages.error(request, "Username does not exist")  # flash message - one time message when page is rendered
             
         # Takes in the username and password and will make sure that the password matches the username and returns either the user instance or None - Query the db, if finds a user that matches the username and password then it will return back that user
         user = authenticate(request, username=username, password=password)
@@ -57,13 +59,15 @@ def loginUser(request):
             login(request, user)
             return redirect('profiles')
         else:                                             # user exists but can't login - if user did not exist then it would print in the except section
-            print("Username OR password is incorrect")
+            # print("Username OR password is incorrect")
+            messages.error(request, "Username OR password is incorrect")
             
     return render(request, 'usersApp/login_register.html')
 
 
 def logoutUser(request):
     logout(request)
+    messages.error(request, "User was successfully logged out")
     return redirect('login')
     
     
