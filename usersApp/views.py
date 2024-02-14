@@ -23,3 +23,8 @@ def userProfile(request, pk):
     
     context = {'profile':profile, 'topSkills': skills_with_description, 'otherSkills': skills_no_description}
     return render(request, 'usersApp/user-profile.html', context)
+
+
+def loginPage(request):
+    return render(request, 'usersApp/login_register.html')
+    
