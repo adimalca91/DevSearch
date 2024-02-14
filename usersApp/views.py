@@ -31,7 +31,7 @@ def userProfile(request, pk):
 In this process, when a user submits their data we want to output certain errors if things go wrong
 '''
 
-def loginPage(request):
+def loginUser(request):
     
     if request.method == "POST":
         print(request.POST) # QueryDict object
@@ -55,4 +55,10 @@ def loginPage(request):
             print("Username OR password is incorrect")
             
     return render(request, 'usersApp/login_register.html')
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+    
     
