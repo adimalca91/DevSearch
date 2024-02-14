@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required     # This decorator will simply sit above any view that we want to block and basically require athentication for
 from .models import *
 from .forms import *
 
@@ -31,6 +32,9 @@ CRUD - CREATE, READ, UPDATE, DELETE -OPERATIONS!
 '''
 
 # Create and Read - Create any kind of project via it's form - hence NO pk paramater
+# This decorator will simply sit above any view that we want to block and basically require athentication for
+# In order to view this createProject page the decorator requires that the user will be logged-in! If the user is NOT logged in then send the user to the login page (according to parameter)
+@login_required(login_url="login")
 def createProject(request):
     form = ProjectForm()
     if request.method == "POST":
@@ -43,6 +47,7 @@ def createProject(request):
     return render(request, 'projectsApp/project_form.html', context)
 
 # Update and Read - Update a certain specific project via it's form - hence the pk parameter
+@login_required(login_url="login")
 def updateProject(request, pk):
     project = Project.objects.get(id=pk)
     form = ProjectForm(instance=project)   # MUST pass in an instance of the project that we want to edit!
@@ -56,6 +61,7 @@ def updateProject(request, pk):
     return render(request, 'projectsApp/project_form.html', context)
 
 # Delete - Delete a certain specific project via it's form - hence the pk parameter
+@login_required(login_url="login")
 def deleteProject(request, pk):
     project = Project.objects.get(id=pk)
     if request.method == "POST":

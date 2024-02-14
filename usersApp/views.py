@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required     # This decorator will simply sit above any view that we want to block and basically require athentication for
 from django.contrib.auth.models import User
 from .models import Profile
 
@@ -32,6 +33,10 @@ In this process, when a user submits their data we want to output certain errors
 '''
 
 def loginUser(request):
+    
+    # restrict a logged in user from directly going to '/login' path in the url bar
+    if request.user.is_authenticated:
+        return redirect('profiles')
     
     if request.method == "POST":
         print(request.POST) # QueryDict object
