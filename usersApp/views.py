@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required     # This decorator will simply sit above any view that we want to block and basically require athentication for
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm       # This is like a Model Form (built in django)
 from django.contrib.auth.models import User
 from .models import Profile
 
@@ -75,7 +76,19 @@ def logoutUser(request):
 
 def registerUser(request):
     page = 'register'
-    context = {'page':page}
+    form = UserCreationForm()
+    
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            # This will create a user object for us 
+            user = form.save(commit=False)
+            user.username = user.username.lower()   # make user that the username is lowercase
+            user.save()                             # Now a user is officially being added to the db and saved
+            
+            messages.success(request, "User acount was successfully created!")
+    
+    context = {'page':page, 'form':form}
     return render(request, 'usersApp/login_register.html', context)
     
     
