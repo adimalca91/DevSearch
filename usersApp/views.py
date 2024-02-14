@@ -97,5 +97,16 @@ def registerUser(request):
     
     context = {'page':page, 'form':form}
     return render(request, 'usersApp/login_register.html', context)
+
+@login_required(login_url='login')
+def userAccount(request):
+    # Get the logged-in user via request parameter - the one-to-one relationship
+    profile = request.user.profile
+    
+    skills =  profile.skill_set.all()
+    projects = profile.project_set.all()
+
+    context = {'profile':profile, 'skills':skills, 'projects':projects}
+    return render(request, 'usersApp/account.html', context)
     
     
