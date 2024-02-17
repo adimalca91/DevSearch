@@ -90,7 +90,7 @@ def registerUser(request):
             
             login(request, user)     # The user will now be logged in
             
-            return redirect('profiles')
+            return redirect('edit-account')
         
         else:
             messages.error(request, "An error has occured during registration")
