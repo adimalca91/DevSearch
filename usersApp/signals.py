@@ -29,6 +29,25 @@ def createProfile(sender, instance, created, **kwargs):
             name=user.first_name,
             )
 
+
+
+'''
+Connecting between the user and the profile - anytime a profile is editted then it's user data is also editted
+and the opposite!
+'''
+def updateUser(sender, instance, created, **kwargs):
+    profile = instance
+    user = profile.user
+    
+    # Ensure its NOT the first time this user is created
+    if created == False:
+        user.first_name = profile.name
+        user.username = profile.username
+        user.email = profile.email
+        user.save()
+    
+
+
 '''
 Anytime we delete a profile we also want to delete a user
 Note - when delete is called on a user instance then it automatically deletes the user's profile b/c the 
@@ -46,5 +65,6 @@ def deleteUser(sender, instance, **kwargs):
 # This createProfile function is triggered when a User is saved!
 post_save.connect(createProfile, sender=User)
 
+post_save.connect(updateUser, sender=Profile)
 
 post_delete.connect(deleteUser, sender=Profile)
