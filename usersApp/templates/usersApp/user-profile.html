@@ -99,7 +99,7 @@
 
                       <div class="project__tags">
 
-                        {% for tag in project.tags.all %}     <!-- This is a many-to-many relationship thats why we access it this way - project.tags.all and NOT project.ta_set.all -->
+                        {% for tag in project.tags.all %}     <!-- This is a many-to-many relationship thats why we access it this way - project.tags.all and NOT project.tag_set.all -->
                         <span class="tag tag--pill tag--main">
                           <small>{{tag}}</small>
                         </span>

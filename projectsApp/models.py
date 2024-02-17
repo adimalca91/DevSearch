@@ -4,6 +4,11 @@ from usersApp.models import Profile
 
 # Create your models here.
 
+'''
+One-To-Many Relationship:
+A project can have one user / owner / profile
+A user (owner) can have many projects
+'''
 class Project(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL) # We want to connect a project to a specific user profile - many-to-one relationship
     title = models.CharField(max_length=200)   # By default null=False - required to enter data in this field (for the database)
@@ -41,8 +46,8 @@ class Review(models.Model):
     
 
 '''
-Many-to-Many relationship.
-One project can have many Tags and a Tag can have meny projects
+Many-to-Many relationship:
+One project can have many Tags and a Tag can have many projects
 '''
 class Tag(models.Model):
     name = models.CharField(max_length=200)
