@@ -109,14 +109,17 @@ def userAccount(request):
     context = {'profile':profile, 'skills':skills, 'projects':projects}
     return render(request, 'usersApp/account.html', context)
 
+
+
 @login_required(login_url='login')
 def editAccount(request):
-    form = ProfileForm()
-    # if request.method == 'POST':
-    #     form = ProfileForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('account')
+    profile = request.user.profile  # The logged-in user
+    form = ProfileForm(instance=profile)  # pre-fill the fields with the current data
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('account')
     
     context = {'form':form}
     return render(request, 'usersApp/profile_form.html', context)
