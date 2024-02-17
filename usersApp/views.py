@@ -108,5 +108,9 @@ def userAccount(request):
 
     context = {'profile':profile, 'skills':skills, 'projects':projects}
     return render(request, 'usersApp/account.html', context)
-    
+
+@login_required(login_url='login')
+def editAccount(request):
+    context = {}
+    return render(request, 'usersApp/profile_form.html', context)
     

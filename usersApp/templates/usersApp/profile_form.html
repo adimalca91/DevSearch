@@ -3,6 +3,10 @@
 
 {% block content %}
 
+<form action="{% url 'edit-account' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Submit" />
+</form>
 
 
 
