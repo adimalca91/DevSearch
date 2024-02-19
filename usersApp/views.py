@@ -24,7 +24,7 @@ def profiles(request):
     # if its an empty string we'll get back all profiles in the db b/c all profiles contain something (the emptystring),
     # but if it contains something it will filter
     profiles = Profile.objects.filter(name__icontains=search_query) # without case sensitivity
-    context = {'profiles':profiles}
+    context = {'profiles':profiles, 'search_query':search_query}
     return render(request, 'usersApp/profiles.html', context)
 
 
