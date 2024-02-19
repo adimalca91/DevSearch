@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required     # This decorator will simply sit above any view that we want to block and basically require athentication for
 from .models import *
 from .forms import *
+from django.db.models import Q
 
 # Create your views here.
 
