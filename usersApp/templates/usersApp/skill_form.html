@@ -4,22 +4,33 @@
 
 {% block content %}
 
-<h1> Create Skill </h1>
-
 <!-- Whatever url you are on thats where its going to send that -->
-<form method="POST" action="">
-    {% csrf_token %}
 
-    {% for field in form %}
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{% url 'account' %}"><i class="fa fa-angle-left"></i></a>
+            <br>
 
-        {{field.label}}
-        {{field}}
+            <form class="form" method="POST" action="">
+                {% csrf_token %}
 
-    {% endfor %}
-
-    <input type="submit" value="Submit" />
-
-</form>
+                {% for field in form %}
+            
+                    <!-- Input:Text -->
+                    <div class="form__field">
+                        <label for="formInput#text">Text Field: {{field.label}} </label>
+                        {{field}}
+                    </div>
+        
+                {% endfor %}
+ 
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
 
 
 
