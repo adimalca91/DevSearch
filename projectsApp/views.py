@@ -75,6 +75,6 @@ def deleteProject(request, pk):
         project.delete()      # This will delete the project object from the DB / Model   
         return redirect('projects') 
     context = {'object' : project}
-    return render(request, 'projectsApp/delete_template.html', context)
+    return render(request, 'delete_template.html', context)
     
     
