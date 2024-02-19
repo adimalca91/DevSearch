@@ -26,6 +26,9 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
+    class Meta:
+        ordering = ['created'] # Order projects oldest to newest (for newst to oldest do '-created')
+    
 '''
 One-to-Many relationship because one project can have many reviews!
 '''
