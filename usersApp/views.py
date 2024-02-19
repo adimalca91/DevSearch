@@ -12,7 +12,18 @@ from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 Get all users
 '''
 def profiles(request):
-    profiles = Profile.objects.all()  # Retrieve all the profiles in the db / model - QuerySet object
+    search_query = ""
+    
+    # Check if something was searched in the search bar
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+        
+    # print('SEARCH:', search_query)
+    
+    # profiles = Profile.objects.all()  # Retrieve all the profiles in the db / model - QuerySet object
+    # if its an empty string we'll get back all profiles in the db b/c all profiles contain something (the emptystring),
+    # but if it contains something it will filter
+    profiles = Profile.objects.filter(name__icontains=search_query) # without case sensitivity
     context = {'profiles':profiles}
     return render(request, 'usersApp/profiles.html', context)
 
