@@ -72,7 +72,12 @@
       <ul class="container">
         <!-- paginator.page_range is the range of the number of pages we have! -->
         {% for page in paginator.page_range %}
-          <li><a href="?page={{page}}" class="btn page-link">{{page}}</a></li>
+          <!-- If we are on the current page -->
+          {% if page == projects.number  %}
+            <li><a href="?page={{page}}" class="btn page-link btn--sub">{{page}}</a></li>
+          {% else %}
+            <li><a href="?page={{page}}" class="btn page-link">{{page}}</a></li>
+          {% endif %}
         {% endfor %}
       </ul>
 
