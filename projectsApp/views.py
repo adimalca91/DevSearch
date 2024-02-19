@@ -5,6 +5,7 @@ from .models import *
 from .forms import *
 from django.db.models import Q
 from .utils import searchProjects
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -15,6 +16,13 @@ Pass in some dynamic data to the template to render and display in the browser
 def projects(request):
     
     projects, search_query = searchProjects(request)
+    
+    page = 2
+    results = 3
+    paginator = Paginator(projects, results)
+    
+    # Reset the projects variable with pagination - get the first page out of the 3 page projects
+    projects = paginator.page(page)
     
     context = {'projects': projects, 'search_query':search_query}
     return render(request, 'projectsApp/projects.html', context)
