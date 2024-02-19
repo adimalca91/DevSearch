@@ -46,7 +46,7 @@ def createProject(request):
             project = form.save(commit=False)   # Get the instance of the project w/o saving it in the DB yet! This gives us an instance of that current project
             project.owner = profile             # Update that owner attribute (one-to-many relationship)
             project.save()                      # CREATE A PROJECT OBJECT IN THE PROJECT MODEL / SAVES TO THE PROJECT DB
-            return redirect('projects')
+            return redirect('account')
         
     context = {'form':form}
     return render(request, 'projectsApp/project_form.html', context)
@@ -61,7 +61,7 @@ def updateProject(request, pk):
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL - Update it with the new data
-            return redirect('projects')
+            return redirect('account')
         
     context = {'form':form}
     return render(request, 'projectsApp/project_form.html', context)
