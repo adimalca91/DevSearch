@@ -21,11 +21,21 @@ def profiles(request):
         
     # print('SEARCH:', search_query)
     
+    # we only want to search our skiils if that query matches perfectly - its a QuerySet of skills
+    # skills = Skill.objects.filter(name__iexact=search_query)
+    
+    skills = Skill.objects.filter(name__icontains=search_query)
+    
     # profiles = Profile.objects.all()  # Retrieve all the profiles in the db / model - QuerySet object
     # if its an empty string we'll get back all profiles in the db b/c all profiles contain something (the emptystring),
     # but if it contains something it will filter
     # lookup the profile by either the name OR the short_intro fields
-    profiles = Profile.objects.filter(Q(name__icontains=search_query) | Q(short_intro__icontains=search_query)) # without case sensitivity - name is a profile field and __icontains is a filter on it
+    # distinct added b/c there are diplicates due to skills - ADI: i think it loops over the skills queryset and
+    # for every skill in skills it filter by it - now the empty string is in every string (in the empty way) therefore it 
+    # displays the profile with duplicates for every skill.
+    profiles = Profile.objects.distinct().filter(Q(name__icontains=search_query) |   # without case sensitivity - name is a profile field and __icontains is a filter on it
+                                      Q(short_intro__icontains=search_query) |
+                                      Q(skill__in=skills))     # We want to know - does the profile have a skill that is listed in this skills QuerySet  
     context = {'profiles':profiles, 'search_query':search_query}
     return render(request, 'usersApp/profiles.html', context)
 
