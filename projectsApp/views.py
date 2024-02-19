@@ -17,7 +17,7 @@ def projects(request):
     
     projects, search_query = searchProjects(request)
     
-    page = request.GET.get('page')  # Needs to have a search parameter! "projects/?page=xxx"
+    page = request.GET.get('page')  # Needs to have a search parameter! "projects/?page=xxx" - page is the search parameter!
     results = 3
     paginator = Paginator(projects, results)
     
@@ -33,7 +33,7 @@ def projects(request):
         page = paginator.num_pages   # returns the number of pages we have
         projects = paginator.page(page)  # return the last page
     
-    context = {'projects': projects, 'search_query':search_query}
+    context = {'projects': projects, 'search_query':search_query, 'paginator':paginator}
     return render(request, 'projectsApp/projects.html', context)
 
 '''
