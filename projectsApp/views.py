@@ -5,7 +5,7 @@ from .models import *
 from .forms import *
 from django.db.models import Q
 from .utils import searchProjects
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 # Create your views here.
 
@@ -17,12 +17,21 @@ def projects(request):
     
     projects, search_query = searchProjects(request)
     
-    page = 2
+    page = request.GET.get('page')  # Needs to have a search parameter! "projects/?page=xxx"
     results = 3
     paginator = Paginator(projects, results)
     
-    # Reset the projects variable with pagination - get the first page out of the 3 page projects
-    projects = paginator.page(page)
+    try:
+        # Reset the projects variable with pagination - get the first page out of the 3 page projects
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        # If a page is NOT passed in - set the page to 1 - the first load
+        page = 1
+        projects = paginator.page(page)
+    except EmptyPage:
+        # If a user tries to go to a page with no results - a page that we don't have!
+        page = paginator.num_pages   # returns the number of pages we have
+        projects = paginator.page(page)  # return the last page
     
     context = {'projects': projects, 'search_query':search_query}
     return render(request, 'projectsApp/projects.html', context)
