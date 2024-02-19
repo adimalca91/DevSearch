@@ -97,7 +97,7 @@
               </td>
               <td class="settings__tableActions">
                 <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.id %}"><i class="fa fa-edit"></i> Edit</a>
-                <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-project' project.id %}"><i class="fa fa-times-circle"></i>
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-project' project.id %}?next=/account"><i class="fa fa-times-circle"></i>
                   Delete</a>
               </td>
             </tr>
