@@ -4,15 +4,24 @@
 
 {% block content %}
 
-<form action="" method="POST">
-    {% csrf_token %}
+    <!-- Main Section -->
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
 
-    <p> Are you sure you want to delete "{{object}}"? </p>
+                <br>
 
-    <a href="{% url 'projects' %}"> Go Back </a> 
+                <form class="form" action="" method="POST">
+                    {% csrf_token %}
 
-    <input type="submit" value="Confirm" />
+                    <p> Are you sure you want to delete "{{object}}"? </p>
 
-</form>
+                     <a class="btn btn--sub btn--lg  my-md" href="{% url 'projects' %}"> Go Back </a> 
+
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Confirm" />
+                </form>
+            </div>
+        </div>
+    </main>
 
 {% endblock %}
