@@ -54,7 +54,8 @@ def createProject(request):
 # Update and Read - Update a certain specific project via it's form - hence the pk parameter
 @login_required(login_url="login")
 def updateProject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile  # get the currently logged-in user
+    project = profile.project_set.get(id=pk)   # Query ONLY that user's profiles - all the projects of that user!
     form = ProjectForm(instance=project)   # MUST pass in an instance of the project that we want to edit!
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES, instance=project)
@@ -68,7 +69,8 @@ def updateProject(request, pk):
 # Delete - Delete a certain specific project via it's form - hence the pk parameter
 @login_required(login_url="login")
 def deleteProject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile  # get the currently logged-in user
+    project = profile.project_set.get(id=pk)
     if request.method == "POST":
         project.delete()      # This will delete the project object from the DB / Model   
         return redirect('projects') 
