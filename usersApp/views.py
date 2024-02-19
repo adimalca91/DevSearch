@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required     # This decorator will simply sit above any view that we want to block and basically require athentication for
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Skill
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 
 # Create your views here.
@@ -135,6 +135,24 @@ def createSkill(request):
             skill = form.save(commit=False)
             skill.owner = profile  # b/c we excluded this field from the form the user fills up now we set it automatically to the associated logged-in user
             skill.save()
+            messages.success(request, "Skill was added successfully!")
+            return redirect('account')
+        
+    context = {'form':form}
+    return render (request, 'usersApp/skill_form.html', context)
+
+
+@login_required(login_url='login')
+def updateSkill(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)  # Ensure that ONLY the owner can edit his skill
+    form = SkillForm(instance=skill)
+    
+    if request.method == "POST":
+        form = SkillForm(request.POST, instance=skill)
+        if form.is_valid():
+            skill.save()
+            messages.success(request, "Skill was updated successfully!")
             return redirect('account')
         
     context = {'form':form}
