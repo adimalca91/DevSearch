@@ -38,11 +38,14 @@ CRUD - CREATE, READ, UPDATE, DELETE -OPERATIONS!
 # In order to view this createProject page the decorator requires that the user will be logged-in! If the user is NOT logged in then send the user to the login page (according to parameter)
 @login_required(login_url="login")
 def createProject(request):
+    profile = request.user.profile  # get the currently logged-in user
     form = ProjectForm()
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES)  # populate the form with the post data and FILES the user submitted in the form
         if form.is_valid():
-            form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL / SAVES TO DB
+            project = form.save(commit=False)   # Get the instance of the project w/o saving it in the DB yet! This gives us an instance of that current project
+            project.owner = profile             # Update that owner attribute (one-to-many relationship)
+            project.save()                      # CREATE A PROJECT OBJECT IN THE PROJECT MODEL / SAVES TO THE PROJECT DB
             return redirect('projects')
         
     context = {'form':form}
