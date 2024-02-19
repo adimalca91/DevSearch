@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm       # This is like a Model Form (built in django)
-from .models import Profile
+from .models import Profile, Skill
 
 
 
@@ -35,6 +35,22 @@ class ProfileForm(ModelForm):
         
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)  # Tell it which class (css class!) we're modifying
+        
+        # loop over the form and add the css class 'input' to every field
+        # loop through every single field in the UserCreationForm and add a css class of 'input'
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class':'input'})
+            
+
+class SkillForm(ModelForm):
+    class Meta:
+        model = Skill
+        fields = '__all__'
+        exclude = ['owner']   # exclude the owner field from the form so the user can't choose another owner
+        
+        
+    def __init__(self, *args, **kwargs):
+        super(SkillForm, self).__init__(*args, **kwargs)  # Tell it which class (css class!) we're modifying
         
         # loop over the form and add the css class 'input' to every field
         # loop through every single field in the UserCreationForm and add a css class of 'input'

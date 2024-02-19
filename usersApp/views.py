@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required     # This decorator w
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile
-from .forms import CustomUserCreationForm, ProfileForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 
 # Create your views here.
 
@@ -123,4 +123,20 @@ def editAccount(request):
     
     context = {'form':form}
     return render(request, 'usersApp/profile_form.html', context)
+    
+@login_required(login_url='login')
+def createSkill(request):
+    profile = request.user.profile
+    form = SkillForm()
+    
+    if request.method == "POST":
+        form = SkillForm(request.POST)
+        if form.is_valid():
+            skill = form.save(commit=False)
+            skill.owner = profile  # b/c we excluded this field from the form the user fills up now we set it automatically to the associated logged-in user
+            skill.save()
+            return redirect('account')
+        
+    context = {'form':form}
+    return render (request, 'usersApp/skill_form.html', context)
     
