@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required     # This decorator will simply sit above any view that we want to block and basically require athentication for
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 from .models import Profile, Skill
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 
@@ -23,7 +24,8 @@ def profiles(request):
     # profiles = Profile.objects.all()  # Retrieve all the profiles in the db / model - QuerySet object
     # if its an empty string we'll get back all profiles in the db b/c all profiles contain something (the emptystring),
     # but if it contains something it will filter
-    profiles = Profile.objects.filter(name__icontains=search_query) # without case sensitivity
+    # lookup the profile by either the name OR the short_intro fields
+    profiles = Profile.objects.filter(Q(name__icontains=search_query) | Q(short_intro__icontains=search_query)) # without case sensitivity - name is a profile field and __icontains is a filter on it
     context = {'profiles':profiles, 'search_query':search_query}
     return render(request, 'usersApp/profiles.html', context)
 
