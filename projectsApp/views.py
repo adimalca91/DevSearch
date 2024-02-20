@@ -31,7 +31,8 @@ Recall that this pk is UUID
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
     # tags = projectObj.tags.all() # QuerySet - dict-like object of tag objects
-    context = {'projectObject': projectObj}
+    form = ReviewForm()
+    context = {'projectObject': projectObj, 'form':form}
     return render(request, 'projectsApp/single-project.html', context)
 
 '''
