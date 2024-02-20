@@ -33,12 +33,12 @@ def projects(request):
         page = paginator.num_pages   # returns the number of pages we have
         projects = paginator.page(page)  # return the last page
         
-    left_index = (int(page) - 4)
+    left_index = (int(page) - 1)
     
     if left_index < 1:
         left_index = 1
         
-    right_index = (int(page) + 5)
+    right_index = (int(page) + 2)
     
     if right_index > paginator.num_pages:
         right_index = paginator.num_pages + 1
