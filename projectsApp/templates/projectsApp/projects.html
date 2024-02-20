@@ -68,7 +68,8 @@
       </div>
     </section>
 
-    {% include 'pagination.html' %}
+    <!-- include this html with keys and values to those dynamic keys -->
+    {% include 'pagination.html' with queryset=projects custom_range=custom_range %}
 
   </main>
 
