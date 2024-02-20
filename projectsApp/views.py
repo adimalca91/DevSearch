@@ -32,6 +32,16 @@ def project(request, pk):
     projectObj = Project.objects.get(id=pk)
     # tags = projectObj.tags.all() # QuerySet - dict-like object of tag objects
     form = ReviewForm()
+    
+    if request.method == "POST":
+        form = ReviewForm(request.POST)
+        review = form.save(commit=False)  # Get the instance of the Review 
+        review.project = projectObj
+        review.owner = request.user.profile
+        review.save()
+        
+        # Update project votecount
+        
     context = {'projectObject': projectObj, 'form':form}
     return render(request, 'projectsApp/single-project.html', context)
 
