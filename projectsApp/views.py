@@ -5,6 +5,7 @@ from .models import *
 from .forms import *
 from django.db.models import Q
 from .utils import searchProjects, paginateProjects
+from django.contrib import messages
 
 
 # Create your views here.
@@ -34,13 +35,15 @@ def project(request, pk):
     form = ReviewForm()
     
     if request.method == "POST":
+        print("IN POST")
         form = ReviewForm(request.POST)
         review = form.save(commit=False)  # Get the instance of the Review 
         review.project = projectObj
         review.owner = request.user.profile
         review.save()
-        
         # Update project votecount
+        messages.success(request, 'Your review was successfully submitted')
+        return redirect('project', pk=projectObj.id)
         
     context = {'projectObject': projectObj, 'form':form}
     return render(request, 'projectsApp/single-project.html', context)
