@@ -27,7 +27,8 @@ class Project(models.Model):
         return self.title
     
     class Meta:
-        ordering = ['created'] # Order projects oldest to newest (for newst to oldest do '-created')
+        # ordering = ['created'] # Order projects oldest to newest (for newst to oldest do '-created')
+        ordering = ['-vote_ratio', '-vote_total', 'title']
     
     
     '''
