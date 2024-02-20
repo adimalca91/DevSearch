@@ -35,15 +35,17 @@ def project(request, pk):
     form = ReviewForm()
     
     if request.method == "POST":
-        print("IN POST")
         form = ReviewForm(request.POST)
         review = form.save(commit=False)  # Get the instance of the Review 
         review.project = projectObj
         review.owner = request.user.profile
         review.save()
+        
         # Update project votecount
+        projectObj.getVoteCount    # The property decorator enables us to run it like that (as an attribute) and not as a method
+        
         messages.success(request, 'Your review was successfully submitted')
-        return redirect('project', pk=projectObj.id)
+        return redirect('project', pk=projectObj.id)   # redirect with a dynamic value
         
     context = {'projectObject': projectObj, 'form':form}
     return render(request, 'projectsApp/single-project.html', context)

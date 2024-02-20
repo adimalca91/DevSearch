@@ -29,6 +29,24 @@ class Project(models.Model):
     class Meta:
         ordering = ['created'] # Order projects oldest to newest (for newst to oldest do '-created')
     
+    
+    '''
+    Anytime we trigger this method here we are going to calculate all this, get all these values
+    and then simply update the instance of it in the database and save it.
+    '''
+    @property  
+    def getVoteCount(self):    # This would be as an attribute and not as an actual method
+        reviews = self.review_set.all()
+        upVotes = reviews.filter(value='up').count()
+        totalVotes = reviews.count()
+        
+        ratio = (upVotes / totalVotes) * 100   # to make this a percentage
+        
+        self.vote_total = totalVotes
+        self.vote_ratio = ratio
+        self.save()
+        
+    
 '''
 One-to-Many relationship because one project can have many reviews!
 '''
