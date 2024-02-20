@@ -32,8 +32,20 @@ def projects(request):
         # If a user tries to go to a page with no results - a page that we don't have!
         page = paginator.num_pages   # returns the number of pages we have
         projects = paginator.page(page)  # return the last page
+        
+    left_index = (int(page) - 4)
     
-    context = {'projects': projects, 'search_query':search_query, 'paginator':paginator}
+    if left_index < 1:
+        left_index = 1
+        
+    right_index = (int(page) + 5)
+    
+    if right_index > paginator.num_pages:
+        right_index = paginator.num_pages + 1
+    
+    custom_range = range(left_index, right_index)
+    
+    context = {'projects': projects, 'search_query':search_query, 'paginator':paginator, 'custom_range':custom_range}
     return render(request, 'projectsApp/projects.html', context)
 
 '''
