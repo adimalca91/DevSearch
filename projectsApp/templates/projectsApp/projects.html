@@ -70,6 +70,13 @@
 
     <div class="pagination">
       <ul class="container">
+
+        {% if projects.has_previous %}
+
+            <li><a href="?page={{projects.previous_page_number}}" class="btn page-link">&#10094; Prev</a></li>
+
+        {% endif %}
+
         <!-- paginator.page_range is the range of the number of pages we have! -->
         {% for page in paginator.page_range %}
           <!-- If we are on the current page -->
