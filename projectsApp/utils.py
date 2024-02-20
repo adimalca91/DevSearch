@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 def paginateProjects(request, projects, results):
 
     page = request.GET.get('page')  # Needs to have a search parameter! "projects/?page=xxx" - page is the search parameter!
-    results = 3
+    # results = 3
     paginator = Paginator(projects, results)
     
     try:

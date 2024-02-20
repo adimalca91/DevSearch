@@ -65,6 +65,9 @@
       </div>
     </section>
 
+    <!-- include this html with keys and values to those dynamic keys -->
+    {% include 'pagination.html' with queryset=profiles custom_range=custom_range %}
+
   </main>
 
 {% endblock content %}
