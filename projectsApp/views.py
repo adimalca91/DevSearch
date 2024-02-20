@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required     # This decorator w
 from .models import *
 from .forms import *
 from django.db.models import Q
-from .utils import searchProjects
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from .utils import searchProjects, paginateProjects
+
 
 # Create your views here.
 
@@ -16,36 +16,9 @@ Pass in some dynamic data to the template to render and display in the browser
 def projects(request):
     
     projects, search_query = searchProjects(request)
+    custom_range, projects = paginateProjects(request, projects, 6)
     
-    page = request.GET.get('page')  # Needs to have a search parameter! "projects/?page=xxx" - page is the search parameter!
-    results = 3
-    paginator = Paginator(projects, results)
-    
-    try:
-        # Reset the projects variable with pagination - get the first page out of the 3 page projects
-        projects = paginator.page(page)
-    except PageNotAnInteger:
-        # If a page is NOT passed in - set the page to 1 - the first load
-        page = 1
-        projects = paginator.page(page)
-    except EmptyPage:
-        # If a user tries to go to a page with no results - a page that we don't have!
-        page = paginator.num_pages   # returns the number of pages we have
-        projects = paginator.page(page)  # return the last page
-        
-    left_index = (int(page) - 1)
-    
-    if left_index < 1:
-        left_index = 1
-        
-    right_index = (int(page) + 2)
-    
-    if right_index > paginator.num_pages:
-        right_index = paginator.num_pages + 1
-    
-    custom_range = range(left_index, right_index)
-    
-    context = {'projects': projects, 'search_query':search_query, 'paginator':paginator, 'custom_range':custom_range}
+    context = {'projects': projects, 'search_query':search_query,'custom_range':custom_range}
     return render(request, 'projectsApp/projects.html', context)
 
 '''
