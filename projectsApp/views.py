@@ -16,7 +16,7 @@ Pass in some dynamic data to the template to render and display in the browser
 def projects(request):
     
     projects, search_query = searchProjects(request)
-    custom_range, projects = paginateProjects(request, projects, 2)
+    custom_range, projects = paginateProjects(request, projects, 6) # Allow for 6 projects to show in one page
     
     context = {'projects': projects, 'search_query':search_query,'custom_range':custom_range}
     return render(request, 'projectsApp/projects.html', context)
