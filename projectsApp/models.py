@@ -30,6 +30,11 @@ class Project(models.Model):
         # ordering = ['created'] # Order projects oldest to newest (for newst to oldest do '-created')
         ordering = ['-vote_ratio', '-vote_total', 'title']
     
+    @property  
+    def reviewers(self):
+        queryset = self.review_set.all().values_list('owner__id', flat=True)
+        return queryset
+    
     
     '''
     Anytime we trigger this method here we are going to calculate all this, get all these values

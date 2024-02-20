@@ -49,7 +49,7 @@ def loginUser(request):
     
     if request.method == "POST":
         print(request.POST) # QueryDict object
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         password = request.POST['password']
         
         
@@ -65,7 +65,7 @@ def loginUser(request):
         # If the user does exists!
         if user is not None:
             login(request, user)                          # creates a session based token in the db and adds it to the cookies
-            return redirect('profiles')
+            return redirect(request.GET['next'] if 'next' in request.GET else 'account')
         else:                                             # user exists but can't login - if user did not exist then it would print in the except section
             # print("Username OR password is incorrect")
             messages.error(request, "Username OR password is incorrect")
