@@ -201,6 +201,5 @@ def viewMessage(request, pk):
 
 def createMessage(request, pk):
     recipient = Profile.objects.get(id=pk)
-    sender = request.user.profile  # Get the currently logged-in user
-    context = {'recipient':recipient, 'sender':sender}
+    context = {'recipient':recipient}
     return render(request,'usersApp/message_form.html', context)
