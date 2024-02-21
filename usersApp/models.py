@@ -43,3 +43,28 @@ class Skill(models.Model):
         return self.name
     
     
+class Message(models.Model):
+    # SET_NULL - if I send a message to xomeone and I delete my account I want the recipient to still
+    #            see that message, I don't want it to go away, they shpuld have a record of it.
+    # null=true - users that don't have an account can't send messages - we will NOT always have a sender attribute here
+    # blank=true - a form could be submitted without a sender / a person with NO account can't send messages
+    sender = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    # To access the profiles messages, instead of doing 'profile.message_set' we will just be able to type in
+    # 'messages'. This is how that profile model is giong to connect to this. We need to add this to one of these
+    # fields at least b/c otherwise it will not allow us to have a connection to the profile model twice! 
+    recipient = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name="messages")
+    
+    name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(max_length=200, null=True, blank=True)
+    subject = models.CharField(max_length=200, null=True, blank=True)
+    body = models.TextField()
+    is_read = models.BooleanField(default=False, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    
+    def __str__(self):
+        return self.subject
+    
+    class Meta:
+        ordering = ['is_read', '-created']
