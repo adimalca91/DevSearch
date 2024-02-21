@@ -187,3 +187,8 @@ def inbox(request):
     
     context = {'messageRequests':messageRequests, 'unreadCount':unreadCount}
     return render(request,'usersApp/inbox.html',context)
+
+@login_required(login_url='login') 
+def viewMessage(request):
+    context = {}
+    return render(request,'usersApp/message.html',context)
