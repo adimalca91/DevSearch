@@ -189,6 +189,18 @@ def inbox(request):
     return render(request,'usersApp/inbox.html',context)
 
 @login_required(login_url='login') 
-def viewMessage(request):
-    context = {}
+def viewMessage(request, pk):
+    profile = request.user.profile  # Get the currently logged-in user
+    message = profile.messages.get(id=pk) # Query the profile itself to get the messages, ensure that users can't access someone else's message by just accessing that pk
+    if message.is_read == False:
+        message.is_read = True
+        message.save()
+    context = {'message':message}
     return render(request,'usersApp/message.html',context)
+
+
+def createMessage(request, pk):
+    recipient = Profile.objects.get(id=pk)
+    sender = request.user.profile  # Get the currently logged-in user
+    context = {'recipient':recipient, 'sender':sender}
+    return render(request,'usersApp/message_form.html', context)

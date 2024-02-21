@@ -17,7 +17,9 @@ urlpatterns = [
     path('delete-skill/<str:pk>/', views.deleteSkill, name="delete-skill"),
     
     path('inbox/', views.inbox, name="inbox"),
-    path('message/', views.viewMessage, name="message"),
+    path('message/<str:pk>/', views.viewMessage, name="message"),
+    path('create-message/<str:pk>/', views.createMessage, name="create-message"),  # To know which account this message is being created for - we want to know where we are sending this / who to send this msg to
+    
     
 
 ]

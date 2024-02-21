@@ -42,7 +42,8 @@
                 </li>
                 {% endif %}
               </ul>
-              <a href="#" class="btn btn--sub btn--lg">Send Message </a>
+              <!-- To know who to send this message to -->
+              <a href="{%url 'create-message' profile.id %}" class="btn btn--sub btn--lg">Send Message</a>
             </div>
           </div>
         </div>
