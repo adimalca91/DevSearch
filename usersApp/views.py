@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required     # This decorator w
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import Profile, Skill
+from .models import Profile, Skill, Message
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .utils import searchProfiles, paginateProfiles
 
@@ -181,5 +181,9 @@ def deleteSkill(request, pk):
   
 @login_required(login_url='login')   
 def inbox(request):
-    context = {}
+    profile = request.user.profile  # Get the currently logged-in user
+    messageRequests = profile.messages.all()   # This is b/c the 'related_name' attribute in the Message model - in order to get a profile's messages, as in the messages sent to this owner / profile
+    unreadCount = messageRequests.filter(is_read=False).count()
+    
+    context = {'messageRequests':messageRequests, 'unreadCount':unreadCount}
     return render(request,'usersApp/inbox.html',context)

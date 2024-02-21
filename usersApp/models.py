@@ -52,7 +52,9 @@ class Message(models.Model):
     
     # To access the profiles messages, instead of doing 'profile.message_set' we will just be able to type in
     # 'messages'. This is how that profile model is giong to connect to this. We need to add this to one of these
-    # fields at least b/c otherwise it will not allow us to have a connection to the profile model twice! 
+    # fields at least b/c otherwise it will not allow us to have a connection to the profile model twice! B/c both
+    # 'sender' and 'recipient' are connected to Profile then to know to which one we want to get we need the related_name
+    # to differentiate b/w the two fields
     recipient = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name="messages")
     
     name = models.CharField(max_length=200, null=True, blank=True)
