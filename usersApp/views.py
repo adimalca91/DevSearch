@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Profile, Skill, Message
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from .utils import searchProfiles, paginateProfiles
 
 # Create your views here.
@@ -201,5 +201,29 @@ def viewMessage(request, pk):
 
 def createMessage(request, pk):
     recipient = Profile.objects.get(id=pk)
-    context = {'recipient':recipient}
+    form = MessageForm()
+    
+    # Check if the user is logged-in or not
+    try:
+        sender = request.user.profile
+    except:
+        sender = None
+        
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+            
+            if sender:
+                message.name = sender.name
+                message.email = sender.email
+            
+            message.save()
+            
+            messages.success(request, "Your message was successfully sent!")
+            return redirect('user-profile', pk=recipient.id)  # If i send someone a msg i will be redirected to their account 
+            
+    context = {'recipient':recipient, 'form':form}
     return render(request,'usersApp/message_form.html', context)
