@@ -119,6 +119,16 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Backend Email Configuration
+
+# Telling Django what we are going to use to actually send these emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True    # Telling Django we are using TLS
+EMAIL_HOST_USER = 'youremail@email.com'
+EMAIL_HOST_PASSWORD = 'youremailpassword'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
