@@ -5,6 +5,9 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 # Django Signals
 '''
 Create some reciever and sender that will fire off anytime the save() method is called on a user profile
@@ -27,7 +30,26 @@ def createProfile(sender, instance, created, **kwargs):
             username=user.username,
             email=user.email,
             name=user.first_name,
-            )
+        )
+        
+        # send_mail(
+        #     "Subject here",
+        #     "Here is the message.",
+        #     "from@example.com",
+        #     ["to@example.com"],
+        #     fail_silently=False,
+        # )
+        
+        subject = "Welcome to DevSearch"
+        message = "We are glad you are here!"
+        
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [profile.email],
+            fail_silently=False,
+        )
 
 
 
