@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response 
 from .serializers import ProjectSerializer
-from projectsApp.models import Project
+from projectsApp.models import Project, Review
 
 
 # A view that will tell us all the url paths / toutes that we are going to have inside of our api's
@@ -39,4 +39,27 @@ def getProjects(request):
 def getProject(request, pk):
     project = Project.objects.get(id=pk)                 # Query Project model to retrieve a single project object
     serializer = ProjectSerializer(project, many=False)  # Takes the queryset and turn it into json data; many - for serializing many objects
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def projectVote(request, pk):
+    project = Project.objects.get(id=pk)
+    user = request.user.profile          # Get the user that is passed along in that token
+    data = request.data
+    
+    # print('DATA: ', data)
+    
+    review, created = Review.objects.get_or_create(
+        owner=user,
+        project=project,
+    )
+    
+    review.value = data['value']
+    review.save()
+    project.getVoteCount
+    
+    serializer = ProjectSerializer(project, many=False)
+    
     return Response(serializer.data)
