@@ -29,6 +29,8 @@ urlpatterns = [
     path('projects/', include('projectsApp.urls')),
     path('', include('usersApp.urls')),
     
+    path('api/', include('api.urls')),
+    
     
     # Built-in Django Class Based Views for Reset / Forgot Password Functionality
     
