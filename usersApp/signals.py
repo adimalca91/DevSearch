@@ -79,8 +79,12 @@ also gets deleted!
 '''
 @receiver(post_delete, sender=Profile)
 def deleteUser(sender, instance, **kwargs):
-    user = instance.user    # the instance here is a Profile instance - so instance.user is the user associated with that profile!
-    user.delete()
+    try:
+        user = instance.user    # the instance here is a Profile instance - so instance.user is the user associated with that profile!
+        user.delete()
+    except:
+        pass
+        
 
 # Any time a user model instance gets created a profile will be created
 # Any time a user gets created what do we want to do?
