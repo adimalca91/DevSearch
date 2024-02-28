@@ -96,7 +96,7 @@ def updateProject(request, pk):
                 project.tags.add(tag)   # access a project's object many-to-many relationship with tags
             return redirect('account')
         
-    context = {'form':form}
+    context = {'form':form, 'project':project}
     return render(request, 'projectsApp/project_form.html', context)
 
 # Delete - Delete a certain specific project via it's form - hence the pk parameter

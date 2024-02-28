@@ -29,13 +29,13 @@
           </div>
 
           {% if projectObject.source_link %}
-          <a class="singleProject__liveLink" href="#" target="_blank"><i class="im im-external-link"></i>Source Code
+          <a class="singleProject__liveLink" href="{{projectObject.source_link}}" target="_blank"><i class="fa fa-external-link"></i>Source Code
           </a>
           {% endif %}
 
           
           {% if projectObject.demo_link %}
-          <a class="singleProject__liveLink" href="#" target="_blank"><i class="im im-external-link"></i>Live Demo
+          <a class="singleProject__liveLink" href="{{projectObject.demo_link}}" target="_blank"><i class="fa fa-external-link"></i>Live Demo
           </a>
           {% endif %}
 
