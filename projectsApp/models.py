@@ -29,6 +29,15 @@ class Project(models.Model):
     class Meta:
         # ordering = ['created'] # Order projects oldest to newest (for newst to oldest do '-created')
         ordering = ['-vote_ratio', '-vote_total', 'title']
+        
+    @property
+    def imageURL(self):
+        try:
+            url = self.featured_image.url
+        except:
+            url = ''
+        return url
+        
     
     @property  
     def reviewers(self):
