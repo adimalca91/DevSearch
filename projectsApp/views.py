@@ -62,12 +62,17 @@ CRUD - CREATE, READ, UPDATE, DELETE -OPERATIONS!
 def createProject(request):
     profile = request.user.profile  # get the currently logged-in user
     form = ProjectForm()
+    
     if request.method == "POST":
+        newtags = request.POST.get('newtags').replace(",", " ").split()
         form = ProjectForm(request.POST, request.FILES)  # populate the form with the post data and FILES the user submitted in the form
         if form.is_valid():
             project = form.save(commit=False)   # Get the instance of the project w/o saving it in the DB yet! This gives us an instance of that current project
             project.owner = profile             # Update that owner attribute (one-to-many relationship)
             project.save()                      # CREATE A PROJECT OBJECT IN THE PROJECT MODEL / SAVES TO THE PROJECT DB
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)   # access a project's object many-to-many relationship with tags
             return redirect('account')
         
     context = {'form':form}
@@ -79,10 +84,16 @@ def updateProject(request, pk):
     profile = request.user.profile  # get the currently logged-in user
     project = profile.project_set.get(id=pk)   # Query ONLY that user's profiles - all the projects of that user!
     form = ProjectForm(instance=project)   # MUST pass in an instance of the project that we want to edit!
+    
     if request.method == "POST":
+        newtags = request.POST.get('newtags').replace(",", " ").split()
+        # print("DATA: ", newtags) # QueryDict
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
-            form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL - Update it with the new data
+            project = form.save()       # CREATE A PROJECT OBJECT IN THE PROJECT MODEL - Update it with the new data
+            for tag in newtags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)   # access a project's object many-to-many relationship with tags
             return redirect('account')
         
     context = {'form':form}
