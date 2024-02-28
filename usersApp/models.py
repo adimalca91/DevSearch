@@ -31,6 +31,20 @@ class Profile(models.Model):
         return str(self.username)
     
     
+    class Meta:
+        # ordering = ['created'] # Order projects oldest to newest (for newst to oldest do '-created')
+        ordering = ['created']
+    
+    
+    @property
+    def imageURL(self):
+        try:
+            url = self.profile_image.url
+        except:
+            url = ''
+        return url
+    
+    
 
 class Skill(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True) # A user / profile can have many skills
